@@ -90,6 +90,7 @@ if [ "$VERSION" == "10.6.194" ]; then
     use_custom_libcxx=false
     use_custom_libcxx_for_host=true
     v8_enable_sandbox = false
+    v8_expose_symbols = true
     '
 else
     python ./tools/dev/v8gen.py arm.release -vv -- '
@@ -107,6 +108,7 @@ else
     symbol_level=1
     use_custom_libcxx=false
     use_custom_libcxx_for_host=true
+    v8_expose_symbols = true
     '
 fi
 ninja -C out.gn/arm.release -t clean
