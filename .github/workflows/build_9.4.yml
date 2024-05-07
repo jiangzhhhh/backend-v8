@@ -157,6 +157,26 @@ jobs:
       with:
         name: v8_bin
         path: v8/v8/output/**/*
+
+  build_windows_32_md_dll:
+    name: Windows-32-MD-DLL
+    runs-on: windows-2019
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run build script
+      shell: cmd
+      run: |
+        cd %GITHUB_WORKSPACE%
+        call npm i
+        call .\windows_32MD_DLL_94.cmd ${{env.VERSION}}
+    - name: Rename
+      shell: bash
+      run: |
+        mv v8/v8/output/v8 v8/v8/output/v8_9.4
+    - uses: actions/upload-artifact@v2
+      with:
+        name: v8_bin
+        path: v8/v8/output/**/*
         
   build_windows_32:
     name: Windows-32
@@ -300,7 +320,7 @@ jobs:
         
   publish:
     runs-on: ubuntu-20.04
-    needs: [build_android_arm_v8,build_android_arm_v7,build_android_x86_64,build_linux,build_linux_arm64,build_windows,build_windows_32,build_windows_md,build_macos_arm64,build_macos_arm64_dll,build_ios_simulator,build_macos,build_ios,build_windows_md_dll,build_macos_dll]
+    needs: [build_android_arm_v8,build_android_arm_v7,build_android_x86_64,build_linux,build_linux_arm64,build_windows,build_windows_32,build_windows_md,build_macos_arm64,build_macos_arm64_dll,build_ios_simulator,build_macos,build_ios,build_windows_md_dll,build_windows_32_md_dll,build_macos_dll]
     steps:
       - uses: actions/download-artifact@v1
         with:
